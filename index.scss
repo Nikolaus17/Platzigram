@@ -228,3 +228,21 @@ $avatar-size: 48px;
     }
 }
 
+.like-heart {
+    font-size: 1em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    transition: all .5s ease;
+    opacity: 0;
+
+    &.liked {
+        color: $platzigram-red;
+        font-size: 120px;
+        display: block;
+        transition: all .5s ease;
+        opacity: 1;
+    }
+}

@@ -7,7 +7,8 @@ module.exports = function pictureCard(pic) {
     function render(picture) { 
         return yo`<div class="card ${picture.liked ? 'liked' : ''}">
             <div class="card-image">
-                <img class="activator" src="${picture.url}">
+                <img class="activator" src="${picture.url}"  ondblclick="${like.bind(null, true)}" >
+                <i class="fa${picture.unlikedHeart ? 's' : ''} fa-heart${picture.unlikedHeart ? '-broken' : ''} like-heart ${picture.likedHeart ? 'liked' : ''}"></i>
             </div>
             <div class="card-content">
                 <a href="/${picture.user.username}" class="card-title">
@@ -25,10 +26,25 @@ module.exports = function pictureCard(pic) {
     }
 
     function like(liked) {
-        pic.liked = liked;
-        pic.likes += liked ? 1 : -1;
+        if (pic.liked) {
+            pic.unlikedHeart = true;
+            pic.likes -= 1;
+            liked = false;
+        } else {
+            pic.likes += 1;
+            liked = true;
+        }
+        pic.likedHeart = pic.liked = liked;
         var newEl = render(pic);
         yo.update(el, newEl);
+
+        setTimeout(function () {
+            pic.likedHeart = false;
+            pic.unlikedHeart = false;
+            var newEl = render(pic);
+            yo.update(el, newEl);
+        }, 1111);
+
         return false;
     }
 
